@@ -203,7 +203,6 @@ public class UserDao {
 			sql.append("    updated_date = CURRENT_TIMESTAMP ");
 			sql.append("WHERE id = ?");
 
-
 			ps = connection.prepareStatement(sql.toString());
 
 			ps.setString(1, user.getAccount());
@@ -214,8 +213,8 @@ public class UserDao {
 				ps.setString(5, user.getDescription());
 				ps.setInt(6, user.getId());
 			} else {
-			ps.setString(4, user.getDescription());
-			ps.setInt(5, user.getId());
+				ps.setString(4, user.getDescription());
+				ps.setInt(5, user.getId());
 			}
 
 			int count = ps.executeUpdate();
