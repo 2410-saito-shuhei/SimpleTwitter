@@ -21,8 +21,8 @@ import chapter6.service.UserService;
 public class SignUpServlet extends HttpServlet {
 
 	/**
-	　　* ロガーインスタンスの生成
-	　　*/
+	* ロガーインスタンスの生成
+	*/
 	Logger log = Logger.getLogger("twitter");
 
 	/**
@@ -96,6 +96,9 @@ public class SignUpServlet extends HttpServlet {
 		String password = user.getPassword();
 		String email = user.getEmail();
 
+		if (new UserService().select(account) != null) {
+			errorMessages.add("すでに存在するアカウントです");
+		}
 		if (!StringUtils.isEmpty(name) && (20 < name.length())) {
 			errorMessages.add("名前は20文字以下で入力してください");
 		}
