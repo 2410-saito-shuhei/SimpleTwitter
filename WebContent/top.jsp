@@ -65,9 +65,9 @@
 				<div class="message">
 					<div class="account-name">
 						<span class="account">
-							<a href="./?user_id=<c:out value="${message.userId}"/> ">
-								<c:out value="${message.account}" />
-							</a>
+						<a href="./?user_id=<c:out value="${message.userId}"/> ">
+							<c:out value="${message.account}" />
+						</a>
 						</span> <span class="name"><c:out value="${message.name}" /></span>
 					</div>
 					<div class="text">
@@ -77,6 +77,22 @@
 						<fmt:formatDate value="${message.createdDate}"
 							pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
+					<c:if test="${ isShowMessageForm }">
+						<c:if test="${loginUser.id==message.userId}">
+							<div class="delete">
+								<form action="deletemessage" method="post">
+									<input type="hidden" name="messageId" value= "${message.id}">
+									<button>削除</button>
+								</form>
+							</div>
+							<div class="edit">
+								<form action="edit" method="get">
+									<input type="hidden" name="messageId" value="${message.id}">
+									<button>編集</button>
+								</form>>
+							</div>
+						</c:if>
+					</c:if>
 				</div>
 			</c:forEach>
 		</div>
