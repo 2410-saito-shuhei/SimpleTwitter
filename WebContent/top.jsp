@@ -82,14 +82,14 @@
 							<div class="delete">
 								<form action="deletemessage" method="post">
 									<input type="hidden" name="messageId" value= "${message.id}">
-									<button>削除</button>
+									<button> 削除 </button>
 								</form>
 							</div>
 							<div class="edit">
 								<form action="edit" method="get">
 									<input type="hidden" name="messageId" value="${message.id}">
-									<button>編集</button>
-								</form>>
+									<button> 編集 </button>
+								</form>
 							</div>
 						</c:if>
 					</c:if>
