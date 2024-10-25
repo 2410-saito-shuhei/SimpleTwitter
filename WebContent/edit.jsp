@@ -43,7 +43,6 @@
 			<form action="edit" method="post">
 				<textarea name="text" cols="100" rows="5" class="tweet-box">${message.text}</textarea>
 				<input type="hidden" name="messageId" value="${message.id}">
-				<input type="hidden" name="updatedDate" value="">
 				<br /> <input type="submit" value="更新">（140文字まで）
 			</form>
 		</div>

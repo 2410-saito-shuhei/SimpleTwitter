@@ -43,15 +43,15 @@ public class EditServlet extends HttpServlet {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
-		//メッセージIDの取得
+		//入力内容の取得
 		String requestId = request.getParameter("messageId");
 		List<String> errorMessages = new ArrayList<String>();
 
 		//メッセージIDが数字かつ空でないか確認
-		if (!(requestId.matches("^([1-9][0-9]*)$")) || requestId == null) {
+		if (requestId == null || !(requestId.matches("^([1-9][0-9]*)$"))) {
 			errorMessages.add("不正なパラメータが入力されました");
 			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+			request.getRequestDispatcher("./").forward(request, response);
 			return;
 		}
 
@@ -60,10 +60,10 @@ public class EditServlet extends HttpServlet {
 		Message message = new MessageService().select(messageId);
 
 		//メッセージIDが存在しているか確認
-		if (message.getId() == 0) {
+		if (message == null) {
 			errorMessages.add("不正なパラメータが入力されました");
 			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+			request.getRequestDispatcher("./").forward(request, response);
 			return;
 		}
 
@@ -83,23 +83,33 @@ public class EditServlet extends HttpServlet {
 				}.getClass().getEnclosingMethod().getName());
 
 		List<String> errorMessages = new ArrayList<String>();
-		String text = request.getParameter("text");
-		int messageId = Integer.parseInt(request.getParameter("messageId"));
+		Message message = getMessage(request);
 
 		//エラーメッセージ表示。テキストを保持。
-		if (!isValid(text, errorMessages)) {
+		if (!isValid(message.getText(), errorMessages)) {
 			request.setAttribute("errorMessages", errorMessages);
-			Message message = new Message();
-			message.setText(text);
-			message.setId(messageId);
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 			return;
 		}
 		//メッセージ更新処理
-		new MessageService().update(messageId, text);
+		new MessageService().update(message);
 		//TOP画面に遷移
-		new TopServlet().doGet(request, response);
+		response.sendRedirect("./");
+	}
+
+	//beansに更新したい入力内容を入れる
+	private Message getMessage(HttpServletRequest request) throws IOException, ServletException {
+
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		Message message = new Message();
+		message.setId(Integer.parseInt(request.getParameter("messageId")));
+		message.setText(request.getParameter("text"));
+		return message;
 	}
 
 	private boolean isValid(String text, List<String> errorMessages) {

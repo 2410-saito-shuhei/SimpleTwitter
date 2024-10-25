@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -87,9 +89,12 @@ public class MessageDao {
 
 			ps.setInt(1, messageId);
 			ResultSet rs = ps.executeQuery();
-			Message message = toMessage(rs);
-			return message;
-
+			List<Message> messages = toMessage(rs);
+			if (messages.isEmpty()) {
+				return null;
+			} else {
+				return messages.get(0);
+			}
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, new Object() {
 			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
@@ -99,23 +104,26 @@ public class MessageDao {
 		}
 	}
 
-	private Message toMessage(ResultSet rs) throws SQLException {
+	private List<Message> toMessage(ResultSet rs) throws SQLException {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-		Message message = new Message();
+		List<Message> messages = new ArrayList<Message>();
 		try {
 			if (rs.next()) {
+				Message message = new Message();
 				message.setId(rs.getInt("id"));
 				message.setUserId(rs.getInt("user_id"));
 				message.setText(rs.getString("text"));
 				message.setCreatedDate(rs.getTimestamp("created_date"));
 				message.setUpdatedDate(rs.getTimestamp("updated_date"));
+
+				messages.add(message);
 			}
-			return message;
+			return messages;
 		} finally {
 			close(rs);
 		}
@@ -151,7 +159,7 @@ public class MessageDao {
 	}
 
 	//メッセージの更新
-	public void update(Connection connection, int messageId, String text) {
+	public void update(Connection connection, Message message) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -169,8 +177,8 @@ public class MessageDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, text);
-			ps.setInt(2, messageId);
+			ps.setString(1, message.getText());
+			ps.setInt(2, message.getId());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {

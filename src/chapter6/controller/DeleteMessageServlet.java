@@ -14,7 +14,7 @@ import chapter6.service.MessageService;
 
 
 
-@WebServlet(urlPatterns = { "/deletemessage" })
+@WebServlet(urlPatterns = { "/deleteMessage" })
 public class DeleteMessageServlet extends HttpServlet{
 	/**
 	* ロガーインスタンスの生成
@@ -41,6 +41,6 @@ public class DeleteMessageServlet extends HttpServlet{
 
 		int deleteMessage = Integer.parseInt(request.getParameter("messageId"));
 		new MessageService().delete(deleteMessage);
-		new TopServlet().doGet(request, response);
+		response.sendRedirect("./");
 	}
 }

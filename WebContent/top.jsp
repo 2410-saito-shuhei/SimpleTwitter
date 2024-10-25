@@ -78,17 +78,17 @@
 							pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
 					<c:if test="${ isShowMessageForm }">
-						<c:if test="${loginUser.id==message.userId}">
+						<c:if test="${loginUser.id == message.userId}">
 							<div class="delete">
-								<form action="deletemessage" method="post">
+								<form action="deleteMessage" method="post">
 									<input type="hidden" name="messageId" value= "${message.id}">
-									<button> 削除 </button>
+									<input type="submit" value="削除">
 								</form>
 							</div>
 							<div class="edit">
 								<form action="edit" method="get">
 									<input type="hidden" name="messageId" value="${message.id}">
-									<button> 編集 </button>
+									<input type="submit" value="編集">
 								</form>
 							</div>
 						</c:if>
