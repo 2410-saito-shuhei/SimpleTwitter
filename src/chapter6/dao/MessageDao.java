@@ -113,7 +113,7 @@ public class MessageDao {
 
 		List<Message> messages = new ArrayList<Message>();
 		try {
-			if (rs.next()) {
+			while (rs.next()) {
 				Message message = new Message();
 				message.setId(rs.getInt("id"));
 				message.setUserId(rs.getInt("user_id"));

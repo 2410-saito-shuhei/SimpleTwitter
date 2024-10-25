@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -44,14 +45,15 @@ public class EditServlet extends HttpServlet {
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 		//入力内容の取得
+		HttpSession session = request.getSession();
 		String requestId = request.getParameter("messageId");
 		List<String> errorMessages = new ArrayList<String>();
 
 		//メッセージIDが数字かつ空でないか確認
 		if (requestId == null || !(requestId.matches("^([1-9][0-9]*)$"))) {
 			errorMessages.add("不正なパラメータが入力されました");
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("./").forward(request, response);
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
 			return;
 		}
 
@@ -62,8 +64,8 @@ public class EditServlet extends HttpServlet {
 		//メッセージIDが存在しているか確認
 		if (message == null) {
 			errorMessages.add("不正なパラメータが入力されました");
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("./").forward(request, response);
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
 			return;
 		}
 
