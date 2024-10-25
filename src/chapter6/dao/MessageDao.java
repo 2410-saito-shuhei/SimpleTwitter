@@ -67,6 +67,7 @@ public class MessageDao {
 		}
 	}
 
+	//メッセージIDからセレクト
 	public Message select(Connection connection, int messageId) {
 
 		log.info(new Object() {
@@ -120,6 +121,7 @@ public class MessageDao {
 		}
 	}
 
+	//メッセージ削除
 	public void delete(Connection connection, int deleteMessage) {
 		log.info(new Object() {
 
@@ -147,6 +149,7 @@ public class MessageDao {
 			close(ps);
 		}
 	}
+
 	//メッセージの更新
 	public void update(Connection connection, int messageId, String text) {
 

@@ -131,6 +131,7 @@ public class MessageService {
 		}
 	}
 
+	//メッセージ削除
 	public void delete(int deleteMessage) {
 
 		log.info(new Object() {
@@ -158,6 +159,7 @@ public class MessageService {
 		}
 	}
 
+	//メッセージ更新
 	public void update(int messageId, String text) {
 
 		log.info(new Object() {
