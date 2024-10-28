@@ -77,23 +77,49 @@
 						<fmt:formatDate value="${message.createdDate}"
 							pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
-					<c:if test="${ isShowMessageForm }">
-						<c:if test="${loginUser.id == message.userId}">
-							<div class="delete">
-								<form action="deleteMessage" method="post">
-									<input type="hidden" name="messageId" value= "${message.id}">
-									<input type="submit" value="削除">
-								</form>
-							</div>
-							<div class="edit">
-								<form action="edit" method="get">
-									<input type="hidden" name="messageId" value="${message.id}">
-									<input type="submit" value="編集">
-								</form>
-							</div>
-						</c:if>
-					</c:if>
 				</div>
+				<c:if test="${ isShowMessageForm }">
+					<c:if test="${loginUser.id == message.userId}">
+						<div class="delete">
+							<form action="deleteMessage" method="post">
+								<input type="hidden" name="messageId" value= "${message.id}">
+								<input type="submit" value="削除">
+							</form>
+						</div>
+						<div class="edit">
+							<form action="edit" method="get">
+								<input type="hidden" name="messageId" value="${message.id}">
+								<input type="submit" value="編集">
+							</form>
+						</div>
+					</c:if>
+				</c:if>
+				<c:forEach items="${comments}" var="comment">
+					<c:if test="${comment.messageId == message.id}">
+						<div class="comment">
+							<div class="account-name">
+								<span class="account"><c:out value="${comment.account}" /></span>
+								<span class="name"><c:out value="${comment.name}" /></span>
+							</div>
+							<div class="text">
+								<pre><c:out value="${comment.text}"/></pre>
+							</div>
+							<div class="date">
+								<fmt:formatDate value="${comment.createdDate}"
+									pattern="yyyy/MM/dd HH:mm:ss" />
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
+				<c:if test="${ isShowMessageForm }">
+					<div class="comments">
+						<form action="comment" method="post">
+						<input type="hidden" name="messageId" value= "${message.id}">
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+						<br /> <input type="submit" value="返信">（140文字まで）
+						</form>
+					</div>
+				</c:if>
 			</c:forEach>
 		</div>
 		<div class="copyright">Copyright(c)ShuheiSaito</div>
