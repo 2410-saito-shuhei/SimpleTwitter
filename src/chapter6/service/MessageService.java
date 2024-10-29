@@ -85,8 +85,8 @@ public class MessageService {
 
 			String defaultStart = "2020/01/01 00:00:00";
 			Date nowDate = new Date();
-			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			String defaultEnd = sdf1.format(nowDate);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String defaultEnd = sdf.format(nowDate);
 			String startDate = null;
 			String endDate = null;
 

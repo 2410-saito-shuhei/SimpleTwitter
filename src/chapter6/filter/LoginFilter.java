@@ -37,11 +37,9 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO 自動生成されたメソッド・スタブ
 	}
 
 	@Override
 	public void destroy() {
-		// TODO 自動生成されたメソッド・スタブ
 	}
 }
