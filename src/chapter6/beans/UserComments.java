@@ -12,7 +12,6 @@ public class UserComments {
 	private String text;
 	private Date createdDate;
 
-	// getter/setterは省略されているので、自分で記述しましょう。
 	public int getId() {
 		return id;
 	}

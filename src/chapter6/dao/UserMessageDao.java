@@ -29,10 +29,9 @@ public class UserMessageDao {
 	public UserMessageDao() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
-	public List<UserMessage> select(Connection connection, Integer id, int num) {
+	public List<UserMessage> select(Connection connection, String startDate, String endDate, Integer id, int num) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -52,14 +51,19 @@ public class UserMessageDao {
 			sql.append("FROM messages ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON messages.user_id = users.id ");
+			sql.append("WHERE messages.created_date ");
+			sql.append("BETWEEN ? ");
+			sql.append("AND ? ");
 			if (id != null) {
-				sql.append("WHERE messages.user_id = ? ");
+				sql.append("AND messages.user_id = ? ");
 			}
 			sql.append("ORDER BY created_date DESC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
+			ps.setString(1, startDate);
+			ps.setString(2, endDate);
 			if (id != null) {
-				ps.setInt(1, id);
+				ps.setInt(3, id);
 			}
 			ResultSet rs = ps.executeQuery();
 

@@ -23,6 +23,13 @@
 				<a href="logout">ログアウト</a>
 			</c:if>
 		</div>
+		<div class="search">
+			<form action="search" method="get">
+				<input type="date" name="start" value="${start}">
+				<input type="date" name="end" value="${end}">
+				<input type="submit" value="絞込">
+			</form>
+		</div>
 		<c:if test="${ not empty loginUser }">
 			<div class="profile">
 				<div class="name">
@@ -114,9 +121,9 @@
 				<c:if test="${ isShowMessageForm }">
 					<div class="comments">
 						<form action="comment" method="post">
-						<input type="hidden" name="messageId" value= "${message.id}">
-						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-						<br /> <input type="submit" value="返信">（140文字まで）
+							<input type="hidden" name="messageId" value= "${message.id}">
+							<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+							<br /> <input type="submit" value="返信">（140文字まで）
 						</form>
 					</div>
 				</c:if>

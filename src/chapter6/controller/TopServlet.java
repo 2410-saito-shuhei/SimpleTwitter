@@ -17,7 +17,7 @@ import chapter6.logging.InitApplication;
 import chapter6.service.CommentService;
 import chapter6.service.MessageService;
 
-@WebServlet(urlPatterns = { "/index.jsp" })
+@WebServlet(urlPatterns = { "/index.jsp", "/search" })
 public class TopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	/**
@@ -50,13 +50,17 @@ public class TopServlet extends HttpServlet {
 			isShowMessageForm = true;
 		}
 		String userId = request.getParameter("user_id");
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
 
-		List<UserMessage> messages = new MessageService().select(userId);
+		List<UserMessage> messages = new MessageService().select(start, end, userId);
 		List<UserComments> comments = new CommentService().select();
 
 		request.setAttribute("messages", messages);
 		request.setAttribute("comments", comments);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
+		request.setAttribute("start", start);
+		request.setAttribute("end", end);
 		request.getRequestDispatcher("/top.jsp").forward(request, response);
 	}
 }

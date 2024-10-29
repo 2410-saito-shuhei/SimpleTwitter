@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = {"/edit", "/setting"})
+@WebFilter(urlPatterns = { "/edit", "/setting" })
 public class LoginFilter implements Filter {
 
 	@Override

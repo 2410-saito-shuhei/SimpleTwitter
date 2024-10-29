@@ -28,7 +28,6 @@ public class CommentService {
 	public CommentService() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
 	public void insert(Comments comment) {

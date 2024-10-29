@@ -26,7 +26,6 @@ public class CommentDao {
 	public CommentDao() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
 	public void insert(Connection connection, Comments comment) {
